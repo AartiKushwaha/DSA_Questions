@@ -127,6 +127,31 @@ Node *flatten(Node *root)
 }
 
 
+// Rotate ll
+
+
+ListNode* rotateRight(ListNode* head, int k) {
+        
+    if(head==NULL || head->next==NULL || k==0) return head;
+    ListNode* temp = head;
+    int len = 1;
+    while(temp->next){
+        temp = temp->next;
+        len++;
+    }
+    temp->next = head;
+    k%=len;
+    k=len-k;
+    while(k--){
+        temp = temp->next;
+    }
+    head = temp->next;
+    temp->next = NULL;
+    return head;
+}
+
+
+
 // #include <iostream>
 // using namespace std;
 
