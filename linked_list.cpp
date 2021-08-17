@@ -1,5 +1,5 @@
 
-/*Factorial of large number*/
+/*Factorial of large number using ll*/
 
 #include <iostream>
 using namespace std;
