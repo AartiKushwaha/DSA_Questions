@@ -51,7 +51,36 @@ int main(){
     return 0;
 }
 
+//Reverse in grps of size K
 
+
+
+ListNode* reverseKGroup(ListNode* head, int k) {
+    ListNode* prevptr=NULL;
+    ListNode* currptr=head;
+    ListNode* nextptr;
+    //to check if there are enough nos in ll so that they can be divided into 
+    //grps of k
+    ListNode* node = head;
+    for(int i=0;i<k;i++) {
+        if(!node) return head;
+        node = node->next;
+    }
+
+    int count=0;
+    while(currptr!=NULL && count<k){
+        nextptr=currptr->next;
+        currptr->next=prevptr;
+        prevptr=currptr;
+        currptr=nextptr;
+        count++;
+
+    }
+    if(nextptr!=NULL){
+        head->next=reverseKGroup(nextptr,k);
+    }
+    return prevptr;
+}
 
 // #include <iostream>
 // using namespace std;
