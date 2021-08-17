@@ -82,6 +82,51 @@ ListNode* reverseKGroup(ListNode* head, int k) {
     return prevptr;
 }
 
+
+
+
+// Flattening a linked list
+
+
+
+Node *merge(Node *a, Node *b){
+
+    if (a == NULL)
+        return b;
+ 
+    // If second linked list is empty then first
+    // is the result
+    if (b == NULL)
+        return a;
+ 
+    // Compare the data members of the two linked
+    // lists and put the larger one in the result
+    Node* result;
+ 
+    if (a->data < b->data)
+    {
+        result = a;
+        result->bottom = merge(a->bottom, b);
+    }
+ 
+    else
+    {
+        result = b;
+        result->bottom = merge(a, b->bottom);
+    }
+    result->next = NULL;
+    return result;
+}
+Node *flatten(Node *root)
+{
+   // Your code here
+   if(root==NULL || root->next==NULL) return root;
+   root->next = flatten(root->next);
+   root = merge(root, root->next);
+   return root;
+}
+
+
 // #include <iostream>
 // using namespace std;
 
