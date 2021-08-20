@@ -87,3 +87,60 @@ while (i < n && j < n) {
 }
 
 return result;
+
+//Job Sequencing
+
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Job{
+    int id;
+    int dead;
+    int profit;
+};
+
+bool comp(Job j1, Job j2){
+    return (j1.profit > j2.profit);
+}
+
+vector<int> JobScheduling(Job arr[], int n) 
+{ 
+    vector<int> ans;
+    sort(arr, arr+n ,comp);
+    int cnt = 0, maxPro = 0;
+    int maxDead = arr[0].dead;
+    for(int i=1; i<n; i++){
+        maxDead = max(maxDead, arr[i].dead);
+    }
+    int freq[maxDead];
+    for(int i=0;i<maxDead;i++){
+        freq[i] = -1;
+    }
+    for(int i = 0; i < n; i++){
+        for(int j = arr[i].dead-1; j >=0; j--){
+            if(freq[j]==-1){
+                freq[j] = arr[i].id;
+                cnt++;
+                maxPro += arr[i].profit;
+                break;
+            }
+        }
+    }
+    ans.push_back(cnt);
+    ans.push_back(maxPro);
+    return ans;
+} 
+
+int main(){
+    struct Job arr[4];
+    cout<<"Input"<<endl;
+    for(int i=0; i<4; i++){
+        cin>>arr[i].id>>arr[i].dead>>arr[i].profit;
+    }
+    vector<int> ans;
+    ans = JobScheduling(arr, 4);
+    for(auto it: ans){
+        cout<<it<<" ";
+    }
+    return 0;
+}
