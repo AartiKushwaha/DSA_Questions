@@ -235,6 +235,27 @@ Node *pres;
      }
  }
  return head;
+
+
+//Remove duplicates from unsorted
+
+Node * removeDuplicates( Node *head) 
+{
+    map<int,int> mp;
+    Node* prev = new Node(-1);
+    Node* curr = head;
+    while(curr){
+        if(mp[curr->data]){
+            prev->next = curr->next;
+        }else{
+            mp[curr->data] = 1;
+            prev = curr;
+        }
+        curr = curr->next;
+
+    }
+    return head;
+}
 // #include <iostream>
 // using namespace std;
 
