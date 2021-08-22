@@ -213,6 +213,28 @@ void removeLoop(Node* head)
         fast->next = NULL;
     }
 }
+
+
+//remove duplicates from sorted ll
+
+Node *pres;
+ Node *prev;
+ prev=head;
+ pres=head->next;
+ while(pres!=NULL)
+ {
+     if(prev->data==pres->data)
+     {
+         prev->next=pres->next;
+         pres=pres->next;
+     }
+     else
+     {
+         prev=pres;
+         pres=pres->next;
+     }
+ }
+ return head;
 // #include <iostream>
 // using namespace std;
 
