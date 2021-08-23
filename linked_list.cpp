@@ -256,6 +256,58 @@ Node * removeDuplicates( Node *head)
     }
     return head;
 }
+
+
+//Add two nos
+
+
+
+class Solution
+{
+    public:
+    
+    Node* reverse(Node* head){
+        Node* pp = NULL;
+        Node* cp = head;
+        Node* np;
+        while(cp){
+            np = cp->next;
+            cp->next = pp;
+            pp = cp;
+            cp = np;
+        }
+        return pp;
+    }
+    //Function to add two numbers represented by linked list.
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+        int sum = 0, carry = 0;
+        first = reverse(first);
+        second = reverse(second);
+        Node* newHead = NULL;
+        Node* curr = NULL;
+        Node* temp;
+        while(first || second){
+            sum = carry + (first?first->data:0) + (second?second->data:0);
+            carry = sum / 10;
+            sum = sum % 10;
+            temp  = new Node(sum);
+            if(newHead == NULL) newHead = temp;
+            else curr->next = temp;
+            curr = temp;
+            if(first) first = first->next;
+            if(second) second = second->next;
+        }
+        if(carry){
+            temp = new Node(carry);
+            curr->next = temp;
+            curr = temp;
+        }
+        newHead = reverse(newHead);
+        return newHead;
+    }
+};
+
 // #include <iostream>
 // using namespace std;
 
