@@ -91,3 +91,28 @@ int change(int amount, vector<int>& coins) {
         return dp[n-1];
     }
 
+
+//https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1#
+
+int knapSack(int W, int wt[], int val[], int n) 
+    { 
+       // Your code here
+       int dp[n+1][W+1];
+       for(int i=0;i<n+1;i++){
+           for(int j=0;j<W+1;j++){
+               if(i==0 or j==0) dp[i][j] = 0;
+           }
+       }
+       for(int i=1;i<n+1;i++){
+           for(int j=1;j<W+1;j++){
+               if(j<wt[i-1]){
+                   dp[i][j] = dp[i-1][j];
+               }else{
+                   int ex = dp[i-1][j];
+                   int in = val[i-1]+dp[i-1][j-wt[i-1]];
+                   dp[i][j] = max(ex, in);
+               }
+           }
+       }
+       return dp[n][W];
+    }
