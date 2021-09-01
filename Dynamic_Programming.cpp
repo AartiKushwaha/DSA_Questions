@@ -116,3 +116,20 @@ int knapSack(int W, int wt[], int val[], int n)
        }
        return dp[n][W];
     }
+
+//https://practice.geeksforgeeks.org/problems/knapsack-with-duplicate-items4201/1#
+
+int knapSack(int N, int W, int val[], int wt[])
+    {
+        int dp[W+1]={0};
+        for(int i=1;i<W+1;i++){
+            int mx = 0;
+            for(int j=0;j<N;j++){
+                if(i>=wt[j]){
+                    mx = max(mx, (dp[i-wt[j]]+val[j]));
+                }
+            }
+            dp[i] = mx;
+        }
+        return dp[W];
+    }
