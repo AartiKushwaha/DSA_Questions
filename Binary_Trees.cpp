@@ -1,22 +1,23 @@
 //Level Order Traversal
 
 vector<int> levelOrder(Node* root)
-    {
-        vector<int> ans;
-        if(root==NULL) return ans;
-        queue<Node*> q;
-        q.push(root);
-        q.push(NULL);
-        while(!q.empty()){
-            Node* node=q.front();
-            q.pop();
-            if(node!=NULL){
-                ans.push_back(node->data);
-                if(node->left) q.push(node->left);
-                if(node->right) q.push(node->right);
-            }else if(!q.empty()) q.push(NULL);
-        }
-        return ans;
+{
+    vector<int> ans;
+    if(root==NULL) return ans;
+    queue<Node*> q;
+    q.push(root);
+    q.push(NULL);
+    while(!q.empty()){
+        Node* node=q.front();
+        q.pop();
+        if(node!=NULL){
+            ans.push_back(node->data);
+            if(node->left) q.push(node->left);
+            if(node->right) q.push(node->right);
+        }else if(!q.empty()) q.push(NULL);
+    }
+    return ans;
+}
   //This can be done using recursion as well
   
   // Reverse level oder traversal
@@ -68,4 +69,24 @@ vector<int> reverseLevelOrder(Node *root)
     }
     reverse(ans.begin(),ans.end());
     return ans;
+}
+    
+    
+//diameter of binary tree
+int height(struct Node* root){
+    if(root==NULL) return 0;
+    int lh=height(root->left);
+    int rh=height(root->right);
+    return max(lh,rh)+1;
+}
+//Function to return the diameter of a Binary Tree.
+int diameter(Node* root)
+{
+    if(root==NULL) return 0;
+    int lh=height(root->left);
+    int rh=height(root->right);
+    int currd=lh+rh+1;
+    int ld=diameter(root->left);
+    int rd=diameter(root->right);
+    return max(currd,max(ld,rd));
 }
