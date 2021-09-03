@@ -50,4 +50,22 @@ vector<int> reverseLevelOrder(Node *root)
 // Same can be done for level oder traversal..the only change to be made is reversal for the for loop
   
 //without Recursion
-
+vector<int> reverseLevelOrder(Node *root)
+{
+    // code here
+    vector<int> ans;
+    queue<Node*> q;
+    q.push(root);
+    // q.push(NULL);
+    while(!q.empty()){
+        Node* n = q.front();
+        if(n){
+            ans.push_back(n->data);
+            if(n->right) q.push(n->right);
+            if(n->left) q.push(n->left);
+        }else if(q.empty()) q.push(NULL);
+        q.pop();
+    }
+    reverse(ans.begin(),ans.end());
+    return ans;
+}
