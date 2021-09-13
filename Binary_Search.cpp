@@ -86,3 +86,45 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
   }
   return 0.0; 
 }
+
+
+
+// Allocate minimum no. of pages
+
+bool isValid(int limit, int arr[], int n, int k){
+  int nos = 0, total = 0;
+  for(int i=0;i<n;i++){
+      if(arr[i]>limit) return false;
+      if(total+arr[i] > limit){
+          nos++;
+          total = arr[i];
+          if(total > limit) return false;
+      }else{
+          total+=arr[i];
+      }
+  }
+  if(k>nos) return true;
+  else return false;
+}
+//Function to find minimum number of pages.
+int findPages(int arr[], int n, int m) 
+{
+  if(m > n) return -1; 
+  int low = arr[0]; 
+  int high = 0;
+  for(int i = 0;i<n;i++) {
+      high = high + arr[i]; 
+      low = min(low, arr[i]); 
+  }
+  int ans = -1;
+  while(low<=high){
+      int mid = (low+high)/2;
+      if(isValid(mid,arr,n,m)){
+          ans = mid;
+          high = mid-1;
+      }else{
+          low = mid+1;
+      }
+  }
+  return ans;
+}
