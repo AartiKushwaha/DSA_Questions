@@ -1,20 +1,21 @@
 //Level Order Traversal
 
-vector<int> levelOrder(Node* root)
-{
-    vector<int> ans;
-    if(root==NULL) return ans;
-    queue<Node*> q;
+vector<vector<int>> levelOrder(TreeNode* root) {
+    if(root==NULL) return {};
+    vector<vector<int>> ans;
+    queue<TreeNode*> q;
     q.push(root);
-    q.push(NULL);
     while(!q.empty()){
-        Node* node=q.front();
-        q.pop();
-        if(node!=NULL){
-            ans.push_back(node->data);
-            if(node->left) q.push(node->left);
-            if(node->right) q.push(node->right);
-        }else if(!q.empty()) q.push(NULL);
+        int size = q.size();
+        vector<int> v;
+        for(int i=0;i<size;i++){
+            TreeNode* parent = q.front();
+            q.pop();
+            v.push_back(parent->val);
+            if(parent->left) q.push(parent->left);
+            if(parent->right) q.push(parent->right);
+        }
+        ans.push_back(v);
     }
     return ans;
 }
