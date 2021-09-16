@@ -1,3 +1,34 @@
+//Postorder Iteratively
+//pepcoding is love
+
+vector<int> postorderTraversal(TreeNode* root) {
+    if(root==NULL) return {};
+    stack<pair<TreeNode*, int>> st;
+    vector<int> ans;
+    st.push({root,1});
+    while(!st.empty()){
+        if(st.top().second==1){
+            st.top().second++;
+            if(st.top().first->left){
+                st.push({st.top().first->left, 1});
+            }
+        }
+        else if(st.top().second==2){
+
+            st.top().second++;
+            if(st.top().first->right){
+                st.push({st.top().first->right, 1});
+            }
+        }
+        else{
+            ans.push_back(st.top().first->val);           //for preorder and this line to second==1 and for inoredr in 2
+            st.pop();
+        }
+    }
+    return ans;
+}
+
+
 //Level Order Traversal
 
 vector<vector<int>> levelOrder(TreeNode* root) {
