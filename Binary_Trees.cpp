@@ -73,20 +73,18 @@ vector<int> reverseLevelOrder(Node *root)
     
     
 //diameter of binary tree
-int height(struct Node* root){
-    if(root==NULL) return 0;
-    int lh=height(root->left);
-    int rh=height(root->right);
+
+int height(TreeNode* root){
+    if(root==NULL) return -1;
+    int lh = height(root->left);
+    int rh = height(root->right);
     return max(lh,rh)+1;
 }
-//Function to return the diameter of a Binary Tree.
-int diameter(Node* root)
-{
+
+int diameterOfBinaryTree(TreeNode* root) {
     if(root==NULL) return 0;
-    int lh=height(root->left);
-    int rh=height(root->right);
-    int currd=lh+rh+1;
-    int ld=diameter(root->left);
-    int rd=diameter(root->right);
-    return max(currd,max(ld,rd));
+    int ld = diameterOfBinaryTree(root->left);
+    int rd = diameterOfBinaryTree(root->right);
+    int ir = height(root->left)+height(root->right)+2;
+    return max(ir,max(ld,rd));
 }
