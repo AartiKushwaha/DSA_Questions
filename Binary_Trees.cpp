@@ -200,3 +200,18 @@ void kLevelDown(TreeNode* root, int k, vector<int> &kFar, TreeNode* prev){
         }
         return ans;
     }
+
+
+//Remove leaves
+
+
+TreeNode* removeLeafNodes(TreeNode* root, int target) {
+    if(root==NULL) return NULL;
+
+    root->left = removeLeafNodes(root->left, target);
+    root->right = removeLeafNodes(root->right, target);
+    if(root->left==NULL and root->right==NULL and root->val == target){
+        return NULL;
+    }
+    return root;
+}
