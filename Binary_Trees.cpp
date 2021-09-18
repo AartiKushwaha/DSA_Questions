@@ -138,3 +138,25 @@ vector<string> binaryTreePaths(TreeNode* root) {
     solver(root, ans, to_string(root->val));
     return ans;
 }
+
+
+//Print k levels down
+
+void solver(struct Node* root, int k, vector<int> &ans){
+    if(root==NULL || k<0) return;
+    if(k==0){
+        ans.push_back(root->data);
+    }
+    solver(root->left, k-1, ans);
+    solver(root->right, k-1, ans);
+}
+
+vector<int> Kdistance(struct Node *root, int k)
+{
+  // Your code here
+  if(root==NULL) return {};
+  vector<int> ans;
+  solver(root, k, ans);
+  return ans;
+  
+}
