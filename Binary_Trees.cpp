@@ -120,3 +120,21 @@ int diameterOfBinaryTree(TreeNode* root) {
     int ir = height(root->left)+height(root->right)+2;
     return max(ir,max(ld,rd));
 }
+
+//Node to leaf path
+
+void solver(TreeNode* root, vector<string> &paths, string p){
+    if(!root->left and !root->right) {
+        paths.push_back(p);
+        return;
+    }
+    if(root->left) solver(root->left, paths, p+"->"+to_string(root->left->val));
+    if(root->right) solver(root->right, paths, p+"->"+to_string(root->right->val));
+}
+
+vector<string> binaryTreePaths(TreeNode* root) {
+    if(root==NULL) return {};
+    vector<string> ans;
+    solver(root, ans, to_string(root->val));
+    return ans;
+}
