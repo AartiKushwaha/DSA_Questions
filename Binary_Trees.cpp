@@ -160,3 +160,43 @@ vector<int> Kdistance(struct Node *root, int k)
   return ans;
   
 }
+
+//K distance far
+
+void kLevelDown(TreeNode* root, int k, vector<int> &kFar, TreeNode* prev){
+        if(root==NULL || k<0 || root==prev) return;
+        if(k==0){
+            kFar.push_back(root->val);
+        }
+        kLevelDown(root->left, k-1, kFar, prev);
+        kLevelDown(root->right, k-1, kFar, prev);
+    }
+    
+    bool rootToTarget(TreeNode* root, int target, vector<TreeNode*> &path){
+        if(root==NULL) return false;
+        if(root->val==target){
+            path.push_back(root);
+            return true;
+        }
+        bool l = rootToTarget(root->left, target, path);
+        if(l){
+            path.push_back(root);
+            return true;
+        } 
+        bool r = rootToTarget(root->right, target, path);
+        if(r){
+            path.push_back(root);
+            return true;
+        } 
+        return false;
+    }
+    
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        vector<int> ans;
+        vector<TreeNode*> pathUptoTarget;
+        bool temp = rootToTarget(root, target->val, pathUptoTarget);
+        for(int i=0;i<pathUptoTarget.size();i++){
+            kLevelDown(pathUptoTarget[i], k-i, ans, i==0?NULL:pathUptoTarget[i-1]);
+        }
+        return ans;
+    }
