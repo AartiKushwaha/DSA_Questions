@@ -234,3 +234,34 @@ bool isBalanced(TreeNode* root) {
     check(root);
     return isbal;
 }
+
+
+//is binary seach tree {normal recursion}
+bool isBST(TreeNode* root, TreeNode* min, TreeNode* max){
+    if(root==NULL) return true;
+    if(min!=NULL and root->val <= min->val) return false;
+    if(max!=NULL and root->val >= max->val) return false;
+    bool leftCheck = isBST(root->left, min, root);
+    bool rightCheck = isBST(root->right, root, max);
+    return leftCheck && rightCheck;
+}
+
+bool isValidBST(TreeNode* root) {
+    return isBST(root, NULL, NULL);
+}
+
+
+//using inorder property.....inorder traversal would be sorted If a tree is binary search tree
+
+TreeNode* prev = NULL;
+bool isValidBST(TreeNode* root) {
+    if(root==NULL) return true;
+    if(!isValidBST(root->left)) return false;
+    if(prev!=NULL and prev->val >= root->val) return false;
+    prev = root;
+    if(!isValidBST(root->right)) return false;
+
+    return true;
+}
+
+
