@@ -215,3 +215,22 @@ TreeNode* removeLeafNodes(TreeNode* root, int target) {
     }
     return root;
 }
+
+
+//is balanced binary tree
+bool isbal = true;
+int check(TreeNode* root){
+    if(root==NULL) return 0;
+    int lh = check(root->left);
+    int rh = check(root->right);
+
+    int diff = abs(lh-rh);
+    if(diff>1) isbal = false;
+
+    return max(lh,rh)+1;
+}
+bool isBalanced(TreeNode* root) {
+    if(root==NULL) return true;
+    check(root);
+    return isbal;
+}
