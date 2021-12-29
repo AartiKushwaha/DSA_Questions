@@ -50,3 +50,39 @@ class Solution {
         return dfsRes;
     }
 };
+
+Q) Detect Cycle in undirected graph
+
+class Solution {
+  public:
+    // Function to detect cycle in an undirected graph.
+    
+    bool checkCycle(int curr, vector<int> &vis, vector<int> adj[]){
+        
+        vis[curr] = 1;
+        queue<pair<int,int>> q;
+        q.push({curr,-1});
+        while(!q.empty()){
+            int node = q.front().first;
+            int prev = q.front().second;
+            q.pop();
+            for(auto adjEle: adj[node]){
+                if(!vis[adjEle]){
+                    vis[adjEle] = 1;
+                    q.push({adjEle, node});
+                }else if(adjEle != prev) return true;
+            }
+        }
+        return false;
+    }
+    
+    bool isCycle(int V, vector<int> adj[]) {
+        vector<int> vis(V,0);
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                if(checkCycle(i,vis,adj)) return true;
+            }
+        }
+        return false;
+    }
+};
