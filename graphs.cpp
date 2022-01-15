@@ -86,3 +86,42 @@ class Solution {
         return false;
     }
 };
+
+
+//isBipartite
+
+//Using BFS
+
+
+class Solution {
+public:
+
+    bool check(int node, vector<int>adj[], int vis[]){
+        queue<int> q;
+        q.push(node);
+        vis[node] = 1;
+        while(!q.empty()){
+            int curr = q.front();
+            q.pop();
+            for(auto it: adj[curr]){
+                if(vis[it] == -1){
+                    vis[it] = 1 - vis[curr];
+                    q.push(it);
+                }else if(vis[it] == vis[curr]) return false;
+            }
+        }
+        return true;
+    }
+    
+	bool isBipartite(int V, vector<int>adj[]){
+        int vis[V];
+        memset(vis, -1, sizeof vis);
+        for(int i=0; i<V; i++){
+            if(vis[i] == -1){
+                if(!check(i, adj, vis)) return false;
+            }
+        }
+        return true;
+	}
+
+};
