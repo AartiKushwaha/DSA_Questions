@@ -194,3 +194,38 @@ class Solution
 	    return ans;
 	}
 };
+
+
+//DIJKSTRA"S ALGO
+
+//Undirected weighted graph
+class Solution
+{
+	public:
+	//Function to find the shortest distance of all the vertices
+    //from the source vertex S.
+    vector <int> dijkstra(int V, vector<vector<int>> adj[], int S)
+    {
+        priority_queue <pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        vector<int> dist(V, INT_MAX);
+        dist[S] = 0;
+        pq.push({0, S});
+        
+        while(!pq.empty()){
+            int curr_dis = pq.top().first;
+            int curr_node = pq.top().second;
+            pq.pop();
+            
+            for(auto it: adj[curr_node]){
+                int adj_node = it[0];
+                int adj_wt = it[1];
+                if(dist[curr_node] + adj_wt < dist[adj_node]){
+                    dist[adj_node] = dist[curr_node] + adj_wt;
+                    pq.push({dist[adj_node], adj_node});
+                }
+            }
+        }
+        
+        return dist;
+    }
+};
