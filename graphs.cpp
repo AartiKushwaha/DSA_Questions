@@ -229,3 +229,50 @@ class Solution
         return dist;
     }
 };
+
+
+
+
+//Prims Algo for Minimum Spanning Tree
+
+class Solution
+{
+	public:
+	//Function to find sum of weights of edges of the Minimum Spanning Tree.
+    int spanningTree(int V, vector<vector<int>> adj[])
+    {
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+        
+        int key[V+1], parent[V+1], mst[V+1];
+        for(int i=0;i<=V;i++){
+            key[i] = INT_MAX, mst[i] = false;
+        }
+        
+        key[0] = 0;
+        parent[0] = -1;
+        pq.push({0, 0});
+        
+        while(!pq.empty()){
+            int u = pq.top().second;
+            pq.pop();
+            
+            mst[u] = true;
+            
+            for(auto it: adj[u]){
+                int v = it[0];
+                int wt = it[1];
+                
+                if(mst[v]==false and wt<key[v]){
+                    parent[v] = u;
+                    key[v] = wt;
+                    pq.push({key[v], v});
+                }
+            }
+        }
+        int sum = 0;
+        for(int i = 1;i<=V;i++) {
+            if(key[i] != INT_MAX) sum += key[i];
+        }
+        return sum;
+    }
+};
