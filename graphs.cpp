@@ -345,3 +345,48 @@ int main(){
 	for(auto it : mst) cout << it.first << " - " << it.second << endl; 
 	return 0;
 }
+
+//Bridges in a graph DFS
+
+#include <bits/stdc++.h>
+using namespace std;
+void dfs(int node, int parent, vector<int> &vis, vector<int> &tin, vector<int> &low, int &timer, vector<int> adj[]) {
+    vis[node] = 1; 
+    tin[node] = low[node] = timer++;          //the low may aquire max value as tin 
+    for(auto it: adj[node]) {
+        if(it == parent) continue;            //for our way back
+        
+        if(!vis[it]) {                        //if not already visited
+            dfs(it, node, vis, tin, low, timer, adj); 
+            low[node] = min(low[node], low[it]);          
+            if(low[it] > tin[node]) {                 //main formula
+                cout << node << " " << it << endl;
+            }
+        } else {                //if node is visited
+            low[node] = min(low[node], tin[it]);            //focus on with what we're comparing
+        }
+    }
+}
+int main() {
+    int n, m;
+    cin >> n >> m; 
+	vector<int> adj[n]; 
+	for(int i = 0;i<m;i++) {
+	    int u, v;
+	    cin >> u >> v; 
+	    adj[u].push_back(v);
+	    adj[v].push_back(u); 
+	}
+	
+	vector<int> tin(n, -1);        //time interval 
+	vector<int> low(n, -1);        //lowest time
+	vector<int> vis(n, 0);         //visited
+	int timer = 0; 
+	for(int i = 0;i<n;i++) {
+	    if(!vis[i]) {
+	        dfs(i, -1, vis, tin, low, timer, adj);         //call dfs for each component
+	    }
+	}
+	
+	return 0;
+}
