@@ -406,7 +406,7 @@ void dfs(int node, int parent, vector<int> &vis, vector<int> &tin, vector<int> &
         if(!vis[it]) {
             dfs(it, node, vis, tin, low, timer, adj, isArticulation); 
             low[node] = min(low[node], low[it]); 
-	    child++; 
+	    child++;                                                 //bcz the starting point can only be an articulation point only if it has multiple childs
             if(low[it] >= tin[node] && parent != -1) {
                 isArticulation[node] = 1; 
             }
