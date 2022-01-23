@@ -602,6 +602,7 @@ public:
             x = root[x];
         }
         return x;
+	//return root[x] = find(root[x]);     path compressions---> TC get O(logn)
     }
 
     void unionSet(int x, int y) {
