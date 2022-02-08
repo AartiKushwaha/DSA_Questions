@@ -57,6 +57,18 @@ void update(int st, int end, int idx, int cur, int inc){
     tree[cur] = min(tree[2*cur+1], tree[2*cur+2]) ;
 }
 
+void updateRange(int st, int end, int is, int ie, int cur, int inc){
+    if(is>end or ie<st) return;          //out of bound--->this should be above
+    if(st==end){
+        tree[cur]+=inc;
+        return;                //leaf node
+    }
+    int mid = (st+end)/2;
+    update(st, mid, is, ie, 2*cur+1, inc);
+    update(mid+1, end, is, ie, 2*cur+2, inc);
+    tree[cur] = min(tree[2*cur+1], tree[2*cur+2]) ;
+}
+
 int main()
 {
     int n,q;
