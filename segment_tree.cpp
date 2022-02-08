@@ -9,11 +9,10 @@ Since the tree is represented using array and relation between parent and child 
 size of memory allocated for segment tree will be 2 * 2⌈log2n⌉  – 1.
 */
 
-
 #include<bits/stdc++.h>
 using namespace std;
-
-void buildTree(int arr[], int tree[], int st, int end, int curIdx){
+int arr[50], tree[50];
+void buildTree(int st, int end, int curIdx){
     //base case
     if(st==end){
         tree[curIdx] = arr[st];
@@ -21,21 +20,37 @@ void buildTree(int arr[], int tree[], int st, int end, int curIdx){
     }
     //recursive case POSTORDER BUILD
     int mid = (st+end)/2;
-    buildTree(arr, tree, st, mid, 2*curIdx+1);
-    buildTree(arr, tree, mid+1, end, 2*curIdx+2);
-    tree[curIdx] = min(tree[2*curIdx+1], tree[2*curIdx + 2]);
+    buildTree(st, mid, 2*curIdx+1);
+    buildTree( mid+1, end, 2*curIdx+2);
+    tree[curIdx] = max(tree[2*curIdx+1], tree[2*curIdx+2]);
     return;
+}
+
+int min_query(int st, int end, int qs, int qe, int idx){
+    //Complete overlap
+    if(st>=qs and end<=qe) return tree[idx];
+    //No Overlap
+    if(end<qe || st>qs) return INT_MIN;
+    //Partial overlap
+    int mid = (st+end)/2;
+    int left = min_query(st, mid, qs, qe, 2*idx+1);
+    int right = min_query(mid+1, end, qs, qe, 2*idx+2);
+    return max(left, right);
 }
 
 int main()
 {
-    int n;
+    int n,q;
     cin>>n;
-    int arr[n];
-    for(int i=0; i<n; i++) cin>>arr[i];
-    int tree[4*n+1];               //max size of the array conatining tree
-    buildTree(arr, tree, 0, n-1, 1);
-    for(int i=0; i<4*n + 1; i++) cout<<tree[i]<<" ";
-    cout<<endl;
+    for(int i=0; i<n; i++) cin>>arr[i];              //max size of the array conatining tree
+    buildTree(0, n-1, 0);
+    cin>>q;
+    while(q--){
+        int qs,qe;
+        cin>>qs>>qe;
+        int ans = min_query(0, n-1, qs, qe, 0);
+        cout<<ans<<endl;
+    }
     return 0;
 }
+
