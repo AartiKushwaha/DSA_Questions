@@ -26,16 +26,29 @@ void buildTree(int st, int end, int curIdx){
     return;
 }
 
-int min_query(int st, int end, int qs, int qe, int idx){
+int max_query(int st, int end, int qs, int qe, int idx){
     //Complete overlap
     if(st>=qs and end<=qe) return tree[idx];
     //No Overlap
     if(end<qe || st>qs) return INT_MIN;
     //Partial overlap
     int mid = (st+end)/2;
-    int left = min_query(st, mid, qs, qe, 2*idx+1);
-    int right = min_query(mid+1, end, qs, qe, 2*idx+2);
+    int left = max_query(st, mid, qs, qe, 2*idx+1);
+    int right = max_query(mid+1, end, qs, qe, 2*idx+2);
     return max(left, right);
+}
+
+
+void update(int st, int end, int idx, int cur, int inc){
+    if(idx>end or idx<st) return;          //out of bound
+    if(st==end){
+        tree[idx]+=inc;
+        return;                //leaf node
+    }
+    int mid = (st+end)/2;
+    update(st, mid, idx, 2*cur+1, inc);
+    update(mid+1, end, idx, 2*cur+2, inc);
+    tree[cur] = min(tree[2*cur+1], tree[2*cur+2]) ;
 }
 
 int main()
@@ -48,9 +61,11 @@ int main()
     while(q--){
         int qs,qe;
         cin>>qs>>qe;
-        int ans = min_query(0, n-1, qs, qe, 0);
+        int ans = max_query(0, n-1, qs, qe, 0);
         cout<<ans<<endl;
     }
+
+    update(0, n-1, 3, 0, 7);
     return 0;
 }
 
