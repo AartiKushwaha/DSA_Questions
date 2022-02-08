@@ -9,6 +9,12 @@ Since the tree is represented using array and relation between parent and child 
 size of memory allocated for segment tree will be 2 * 2⌈log2n⌉  – 1.
 */
 
+/*Complexities
+BUILD-> O(N) bcz we're basically creating and filling the tree array of size 4*n+1.
+QUERIES-> O(logn)
+UPDATE-> O(logn)
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 int arr[50], tree[50];
