@@ -1,6 +1,24 @@
 //Postorder Iteratively
 //pepcoding is love
 
+
+
+//Striver is no less
+///pre iterative---> ffirst push right then left
+vector<int> preorderTraversal(TreeNode* root) {
+    if(!root) return{};
+    vector<int> ans;
+    stack<TreeNode*> st;
+    st.push(root);
+    while(!st.empty()){
+        TreeNode* node = st.top();
+        ans.push_back(node->val);
+        st.pop();
+        if(node->right) st.push(node->right);
+        if(node->left) st.push(node->left);
+    }
+    return ans;
+}
 vector<int> postorderTraversal(TreeNode* root) {
     if(root==NULL) return {};
     stack<pair<TreeNode*, int>> st;
