@@ -40,6 +40,33 @@ vector<int> inorderTraversal(TreeNode* root) {
         }
         return ans;
     }
+
+
+
+///iterative postorder two stacks
+
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        if(!root) return {};
+        vector<int> ans;
+        stack<TreeNode*>  st1;
+        stack<int> st2;
+        st1.push(root);
+        while(!st1.empty()){
+            TreeNode* curr = st1.top();
+            st1.pop();
+            if(curr->left) st1.push(curr->left);
+            if(curr->right) st1.push(curr->right);
+            st2.push(curr->val);
+        }
+        while(!st2.empty()){
+            ans.push_back(st2.top());
+            st2.pop();
+        }
+        return ans;
+    }
+};
 vector<int> postorderTraversal(TreeNode* root) {
     if(root==NULL) return {};
     stack<pair<TreeNode*, int>> st;
