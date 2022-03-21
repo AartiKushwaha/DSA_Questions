@@ -1,5 +1,5 @@
 //BFS    ---->for disconnected components, nodes starting with zero
-
+//prim's TC=O(V^2) without adj list
 class Solution {
   public:
     // Function to return Breadth First Traversal of given graph.
