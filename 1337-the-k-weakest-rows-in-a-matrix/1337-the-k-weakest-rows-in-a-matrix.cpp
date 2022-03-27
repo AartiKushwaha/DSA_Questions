@@ -26,7 +26,7 @@ public:
             m.insert({p, i});
         }
         vector<int> res;
-        for (auto it = begin(m); k > 0; ++it, --k)
+        for (auto it = m.begin(); k > 0; ++it, --k)
             res.push_back(it->second);
         return res;
     }
