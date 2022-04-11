@@ -1,26 +1,27 @@
 class Solution {
 public:
-    
-    bool solver(int idx, int target, vector<int> &arr, vector<vector<int>> &dp){
-        if(target==0) return true;
-        if(idx==0) return (arr[0]==target);
-        if(dp[idx][target] != -1) return dp[idx][target];
-        bool notTake = solver(idx-1, target, arr, dp);
-        bool take = false;
-        if(target >= arr[idx]){
-            take = solver(idx-1, target - arr[idx], arr, dp);
-        }
-        
-        return dp[idx][target] = (notTake or take);
-    }
-    
+
     bool canPartition(vector<int>& nums) {
-        
         int sum = 0;
         for(auto num: nums) sum+=num;
         int n = nums.size();
         if(sum%2==1) return false;
-        vector<vector<int>> dp(n, vector<int>(sum/2 + 1, -1));
-        return solver(nums.size()-1, sum/2, nums, dp);
+        int target = sum/2;
+        vector<vector<bool>> dp(n, vector<bool>(target + 1, false));
+        for(int i=0; i<n; i++){
+            dp[i][0] = true;
+        }
+        if(nums[0]<=target) dp[0][nums[0]] = true;
+        for(int i=1; i<n; i++){
+            for(int j=1; j<target+1; j++){
+                bool notTake = dp[i-1][j];
+                bool take = false;
+                if(j >= nums[i]){
+                    take = dp[i-1][j - nums[i]];
+                }
+                dp[i][j] = (notTake || take);
+            }
+        }
+        return dp[n-1][target];
     }
 };
