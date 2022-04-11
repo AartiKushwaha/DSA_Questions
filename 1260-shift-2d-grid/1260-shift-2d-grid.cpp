@@ -1,28 +1,22 @@
 class Solution {
 public:
     vector<vector<int>> shiftGrid(vector<vector<int>>& grid, int k) {
-        stack<int> st;
+        vector<vector<int>> temp;
+        temp = grid;
         int n = grid.size(), m = grid[0].size();
         while(k--){
-            for(int i=m-2; i>=0; i--){
-                st.push(grid[n-1][i]);
-            }
-            for(int i=n-2; i>=0; i--){
-                for(int j=m-1; j>=0; j--){
-                    st.push(grid[i][j]);
+            for(int i = 0; i < n; ++i){
+                for(int j = 1; j < m; ++j){
+                    temp[i][j] = grid[i][j-1];
                 }
+                    
             }
-            st.push(grid[n-1][m-1]);
-    
-            for(int i=0; i<n; i++){
-                for(int j=0; j<m; j++){
-                    grid[i][j] = st.top();
-                    st.pop();
-                }
+            for(int i = 0; i < n-1; ++i){
+                temp[i+1][0] = grid[i][m-1];
             }
-            
+            temp[0][0] = grid[n-1][m-1]; // special case
+            grid = temp;
         }
-        
-        return grid;
+        return temp;
     }
 };
