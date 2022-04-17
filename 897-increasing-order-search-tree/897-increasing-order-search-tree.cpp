@@ -11,21 +11,15 @@
  */
 class Solution {
 public:
-    
-    
-    void inorder(TreeNode*& ans, TreeNode* root) {
-        if (!root) return;
-        inorder(ans, root->left);
-        ans->right = new TreeNode(root->val);
-        ans = ans->right;
-        inorder(ans, root->right);
+    TreeNode* solver(TreeNode* root, TreeNode* tail){
+        if (!root) return tail;
+        TreeNode* res = solver(root->left, root);
+        root->left = NULL;
+        root->right = solver(root->right, tail);
+        return res;
     }
     
     TreeNode* increasingBST(TreeNode* root) {
-        TreeNode* temp;
-        TreeNode* ans = new TreeNode();
-        temp = ans;
-        inorder(ans, root);
-        return temp->right;
+        return solver(root, NULL);
     }
 };
